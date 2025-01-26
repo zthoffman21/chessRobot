@@ -18,14 +18,14 @@ def getBestMove(fen: str) -> str:
 
     return response.json()['bestmove'].split()[1]
 
+if __name__ == "__main__":
+    board = chess.Board()
 
-board = chess.Board()
+    while True:
+        bestMove = getBestMove(board.fen())
 
-while True:
-    bestMove = getBestMove(board.fen())
+        print("Your move:", bestMove)
+        board.push(chess.Move.from_uci(bestMove))
 
-    print("Your move:", bestMove)
-    board.push(chess.Move.from_uci(bestMove))
-
-    opponentMove = input("Opponent move:")
-    board.push(chess.Move.from_uci(opponentMove))
+        opponentMove = input("Opponent move:")
+        board.push(chess.Move.from_uci(opponentMove))
