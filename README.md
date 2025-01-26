@@ -22,8 +22,6 @@ This project implements a robotic arm that can identify chess pieces and their p
 - CAD models created in Autodesk Fusion 360
 
 ## Planned Features
-- [ ] Complete board detection system
-- [ ] Piece classification model
 - [ ] Inverse kinematics implementation
 - [ ] Full game loop automation
 
