@@ -34,7 +34,7 @@ if __name__ == "__main__":
     while True:
         # Process image
         finder = ChessBoardFinder()
-        frame = cv2.imread("images/start.jpg")
+        frame = cv2.imread("images/15.jpg")
         boardCorners, playCorners, filtered, warpedData = finder.findBoard(frame)
 
         # Finds the length and height of the found playing area
@@ -61,7 +61,8 @@ if __name__ == "__main__":
         # Player made a move
         if board != prevBoard:
             print("\nBoards changed!")
-
+            for x in board:
+                print(x)
             # Finding the move the player made
             moveMade = input.findMovePlayed(previousBoard=prevBoard, currentBoard=board)
             boardTracker.push(chess.Move.from_uci(moveMade))
@@ -78,5 +79,5 @@ if __name__ == "__main__":
 
             prevBoard = board
 
-        # Wait 5 seconds before checking if player made a move
+        # Wait 5 seconds before checking if player made a move\
         time.sleep(5)

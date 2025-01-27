@@ -36,9 +36,9 @@ class ChessDataset(Dataset):
 
 if __name__ == "__main__":
    data_dir = "squares"
-   batch_size = 32
-   num_epochs = 30
-   learning_rate = 0.001
+   batch_size = 16
+   num_epochs = 50
+   learning_rate = 0.0005  
    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
    
    transform = transforms.Compose([

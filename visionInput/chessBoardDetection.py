@@ -92,7 +92,7 @@ class ChessBoardFinder:
         return warped, squares
 
 if __name__ == "__main__":
-    imagePath = "images/test1.jpg"
+    imagePath = "images/19.jpg"
     frame = cv2.imread(imagePath)
     
     finder = ChessBoardFinder()

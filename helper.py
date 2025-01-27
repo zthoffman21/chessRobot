@@ -111,7 +111,7 @@ def processSquares(imagePath):
         
         cv2.imshow('Reference Board', reference)
         
-        for dirName in ['squaresTest/black', 'squaresTest/white', 'squaresTest/empty']:
+        for dirName in ['squares/black', 'squares/white', 'squares/empty']:
             os.makedirs(dirName, exist_ok=True)
             
         for i, ((x1, y1), (x2, y2)) in enumerate(squares):
@@ -123,18 +123,18 @@ def processSquares(imagePath):
             while True:
                 key = cv2.waitKey(0) & 0xFF
                 if key == ord('d'):
-                    cv2.imwrite(f'squaresTest/black/{baseName}_square_{i}.jpg', squareImg)
+                    cv2.imwrite(f'squares/black/{baseName}_square_{i}.jpg', squareImg)
                     break
                 elif key == ord('s'):
-                    cv2.imwrite(f'squaresTest/empty/{baseName}_square_{i}.jpg', squareImg)
+                    cv2.imwrite(f'squares/empty/{baseName}_square_{i}.jpg', squareImg)
                     break
                 elif key == ord('a'):
-                    cv2.imwrite(f'squaresTest/white/{baseName}_square_{i}.jpg', squareImg)
+                    cv2.imwrite(f'squares/white/{baseName}_square_{i}.jpg', squareImg)
                     break
                 elif key == ord('q'):
                     cv2.destroyAllWindows()
                     return
 
 if __name__ == "__main__":
-    imagePath = "images/test1.jpg"
+    imagePath = "images/19.jpg"
     processSquares(imagePath)
