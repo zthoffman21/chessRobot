@@ -1,12 +1,15 @@
 import cv2
 import numpy as np
+from picamera.array import PiRGBArray
+from picamera import PiCamera
+import time
 
 class ChessBoardFinder:
     def __init__(self, targetWidth=800, playAreaSize=400, borderPixels=0.04769):
         self.targetWidth = targetWidth
         self.playAreaSize = playAreaSize
         self.borderPixels = borderPixels
-        # HSV thresholds for brown
+        # HSV thresholds for brown (adjust if necessary)
         self.lowerBrown = np.array([5, 130, 40])
         self.upperBrown = np.array([30, 255, 220])
 
@@ -54,7 +57,7 @@ class ChessBoardFinder:
             epsilon += 0.002 * arcLen * (len(approx) - 4)
             approx = cv2.approxPolyDP(boardContour, epsilon, True)
 
-        # Optionally, draw the approximated contour for visualization:
+        # Optionally, draw the approximated contour for visualization.
         cv2.drawContours(image, [approx], 0, (0, 255, 0), 2)
         
         # Flatten to shape (4, 2) and return as integer coordinates.
@@ -99,26 +102,42 @@ class ChessBoardFinder:
 
         return cropped, squares
 
-if __name__ == "__main__":
-    imagePath = "images/start.jpg"
-    frame = cv2.imread(imagePath)
+def main():
+    # Initialize the Raspberry Pi camera.
+    camera = PiCamera()
+    camera.framerate = 32
+    rawCapture = PiRGBArray(camera)
+
+    # Allow the camera to warm up.
+    time.sleep(0.1)
     
     finder = ChessBoardFinder()
-    boardCorners, filtered, warpedData = finder.findBoard(frame)
     
-    if boardCorners is not None and warpedData is not None:
-        warped, squares = warpedData
+    print("Starting video stream. Press 'q' to exit.")
+    for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        image = frame.array
         
-        # Draw the detected board contour on the filtered image.
-        cv2.drawContours(filtered, [boardCorners], 0, (0, 255, 0), 2)
+        boardCorners, filtered, warpedData = finder.findBoard(image)
+        if boardCorners is not None and warpedData is not None:
+            warped, squares = warpedData
+            # Draw detected board contour on the filtered image.
+            cv2.drawContours(filtered, [boardCorners], 0, (0, 255, 0), 2)
+            
+            # Draw individual chess squares on the warped (cropped) play area.
+            warpedDisplay = warped.copy()
+            for (x1, y1), (x2, y2) in squares:
+                cv2.rectangle(warpedDisplay, (x1, y1), (x2, y2), (0, 255, 0), 1)
+            cv2.imshow("Warped (Cropped Play Area)", warpedDisplay)
         
-        # Draw the individual chess squares on the warped (cropped) playing area.
-        warpedDisplay = warped.copy()
-        for (x1, y1), (x2, y2) in squares:
-            cv2.rectangle(warpedDisplay, (x1, y1), (x2, y2), (0, 255, 0), 1)
+        cv2.imshow("Result", filtered)
         
-        cv2.imshow('Play Area', warpedDisplay)
-    
-    cv2.imshow('Result', filtered)
-    cv2.waitKey(0)
+        # Clear the stream in preparation for the next frame.
+        key = cv2.waitKey(1) & 0xFF
+        rawCapture.truncate(0)
+        if key == ord("q"):
+            break
+
     cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()

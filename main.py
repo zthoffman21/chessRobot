@@ -73,6 +73,11 @@ if __name__ == "__main__":
             boardTracker.push(chess.Move.from_uci(bestMove))
             print(f'Move made: {bestMove}')
 
+            # Converting the best move into its points in the format of 2d array indexes 
+            startPoint = (8-int(bestMove[:2][1]), {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}[bestMove[:2][0]])
+            endPoint = (8-int(bestMove[2:][1]), {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7}[bestMove[2:][0]])
+
+
             # ...
             # Code to make move physically
             # ...
