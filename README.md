@@ -46,11 +46,11 @@ The vision system processes the input image in several stages:
    <img src="https://github.com/user-attachments/assets/e8a41df2-6813-4347-9032-f9421ea264e7" alt="Board Contour Approximation" width="300" height="auto">
 
 6. **Perspective Transformation**  
-   The detected board is warped into a square play area, cropped by a border margin, and divided into an 8x8 grid for further analysis.  
+   The detected board is warped into a square play area.  
    <img src="https://github.com/user-attachments/assets/4776e551-e417-49d0-b417-d2155ef867d4" alt="Warped & Cropped Board" width="300" height="auto">
    
 7. **Square Separation**  
-   Once the board is found and warped, the board is broken up into 64 separate images for each square.  
+   Once the board is found and warped, it is cropped by a border margin and divided into an 8x8 grid that will be fed into the CNN.  
    <img src="https://github.com/user-attachments/assets/c2f5f91c-1d2b-4dab-b679-8f6e809fcbb5" alt="Warped Grid" width="300" height="auto">
 
 ## Progress & Future Work
@@ -58,10 +58,9 @@ The vision system processes the input image in several stages:
 - **Completed:**  
   - Robust board detection via multi-stage preprocessing and contour approximation.
   - Successful segmentation of the board into individual squares.
-  - Trained Convoluted Nueral Network for square classification.
+  - Trained Convolutional Neural Network (CNN) for square classification.
   - Stockfish API integration.
     
-
 - **Planned:**  
   - Full integration of the inverse kinematics.
   - Further improvements in piece classification.
