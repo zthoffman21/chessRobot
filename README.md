@@ -1,37 +1,73 @@
 # Chess Robot
-A robotic chess system that combines computer vision and robotic control to play physical chess games autonomously.
+
+An autonomous chess-playing robot that combines computer vision and robotic control to play physical chess games.
 
 ## Overview
-This project implements a robotic arm that can identify chess pieces and their positions using computer vision, then physically move pieces using precise servo control and inverse kinematics.
 
-## Current Status
-🚧 **Work in Progress** - Active development with core systems under construction
+This project implements a robotic arm that identifies chess pieces and their positions using computer vision, then physically moves the pieces using precise servo control and inverse kinematics. Significant progress has been made on the computer vision system, which now robustly detects the chessboard through a multi-step image processing pipeline.
 
-## Core Components
-### Hardware
-- 20-inch articulated robotic arm (3D printed)
+## Hardware
+
+- 20-inch articulated robotic arm (Modeled in Fusion360 and 3D printed)
 - Raspberry Pi 4B
-- Raspberry Pi AI Camera 
+- Raspberry Pi AI Camera
 - PCA9685 PWM driver
 - High-torque 270° metal gear servos (40KG-60KG)
 
-### Software 
-- Computer vision system using OpenCV for board detection
-- PyTorch neural network for piece classification
-- Inverse kinematics for precise arm movement
-- CAD models created in Autodesk Fusion 360
+## Software
 
-## Planned Features
-- [ ] Inverse kinematics implementation
-- [ ] Full game loop automation
+- **Computer Vision:** OpenCV-based pipeline for board detection
+- **Machine Learning:** PyTorch neural network for piece classification
+- **Robotics:** Inverse kinematics for precise arm movement
+- **CAD:** 3D models created in Autodesk Fusion 360
 
-## Development Timeline
-- November 2024: Project start, initial design & CAD
-- January 2025: Computer vision development
-- Current: Implementing core vision systems
+## Computer Vision Process
+
+The vision system processes the input image in several stages:
+
+1. **Input Image**  
+   The raw input captured by the AI camera.  
+   <img src="images/3.JPG" alt="Input Image" width="300" height="auto">
+
+2. **Preprocessing**  
+   The image is resized, denoised (using fastNlMeansDenoisingColored), and smoothed with a bilateral filter to preserve edges.  
+   <img src="https://github.com/user-attachments/assets/24b98eb7-3a1d-404f-a388-d4700c96671d" alt="Preprocessed Image" width="300" height="auto">
+
+3. **Thresholding**  
+   The image is converted to the HSV color space, and a mask is generated using predefined brown thresholds to isolate the chessboard region.  
+   <img src="https://github.com/user-attachments/assets/5b3c4cd6-be36-4d1d-a3ee-7369d3b62b95" alt="Threshold Mask" width="300" height="auto">
+
+4. **Morphological Operations**  
+   Dilation, erosion, and closing (MORPH_CLOSE) are applied to refine the mask and reduce noise.  
+   <img src="https://github.com/user-attachments/assets/b21a067a-233d-4ae9-bbd7-1963be2e80d4" alt="Morphological Processing" width="300" height="auto">
+
+5. **Contour Detection & Polynomial Approximation**  
+   The largest contour is detected and approximated to a quadrilateral using the `cv2.approxPolyDP` method, outlining the chessboard.  
+   <img src="https://github.com/user-attachments/assets/e8a41df2-6813-4347-9032-f9421ea264e7" alt="Board Contour Approximation" width="300" height="auto">
+
+6. **Perspective Transformation**  
+   The detected board is warped into a square play area, cropped by a border margin, and divided into an 8x8 grid for further analysis.  
+   <img src="https://github.com/user-attachments/assets/4776e551-e417-49d0-b417-d2155ef867d4" alt="Warped & Cropped Board" width="300" height="auto">
+   
+7. **Square Separation**  
+   Once the board is found and warped, the board is broken up into 64 separate images for each square.  
+   <img src="https://github.com/user-attachments/assets/c2f5f91c-1d2b-4dab-b679-8f6e809fcbb5" alt="Warped Grid" width="300" height="auto">
+
+## Progress & Future Work
+
+- **Completed:**  
+  - Robust board detection via multi-stage preprocessing and contour approximation.
+  - Successful segmentation of the board into individual squares.
+  - Trained Convoluted Nueral Network for square classification.
+  - Stockfish API integration.
+    
+
+- **Planned:**  
+  - Full integration of the inverse kinematics.
+  - Further improvements in piece classification.
 
 ## Setup & Installation
-*Documentation coming soon*
 
-## Gallery
-*Photos & videos coming soon*
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/zthoffman21/chessRobot.git
