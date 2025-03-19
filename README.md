@@ -21,6 +21,20 @@ This project implements a robotic arm that identifies chess pieces and their pos
 - **Robotics:** Inverse kinematics for precise arm movement
 - **CAD:** 3D models created in Autodesk Fusion 360
 
+## CAD Model
+
+The robotic arm was designed and assembled in Autodesk Fusion 360. Below are some views of the CAD model:
+### Home View
+<img src="https://github.com/user-attachments/assets/7fde5c12-ea80-4ea5-99b3-357459eb46b3" alt="Fusion 360 Home View" width="300" height="auto">
+
+### Front View
+<img src="https://github.com/user-attachments/assets/513f0785-d334-4f0b-9211-2e1e1d9917d5" alt="Fusion 360 Front View" width="300" height="auto">
+
+### Side View
+<img src="https://github.com/user-attachments/assets/5dd077a4-1d71-4719-bd61-001bc527a5f2" alt="Fusion 360 Side View" width="300" height="auto">
+
+*These images highlight the detailed design and assembly of the chess-playing robot's components.*
+
 ## Computer Vision Process
 
 The vision system processes the input image in several stages:
