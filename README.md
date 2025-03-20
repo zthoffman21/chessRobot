@@ -33,7 +33,6 @@ The robotic arm was designed and assembled in Autodesk Fusion 360. Below are som
 ### Side View
 <img src="https://github.com/user-attachments/assets/5dd077a4-1d71-4719-bd61-001bc527a5f2" alt="Fusion 360 Side View" width="300" height="auto">
 
-*These images highlight the detailed design and assembly of the chess-playing robot's components.*
 
 ## Computer Vision Process
 
@@ -44,7 +43,7 @@ The vision system processes the input image in several stages:
    <img src="images/3.JPG" alt="Input Image" width="300" height="auto">
 
 2. **Preprocessing**  
-   The image is resized, denoised (using fastNlMeansDenoisingColored), and smoothed with a bilateral filter to preserve edges.  
+   The image is resized, denoised `fastNlMeansDenoisingColored`, and smoothed with a bilateral filter to preserve edges.  
    <img src="https://github.com/user-attachments/assets/24b98eb7-3a1d-404f-a388-d4700c96671d" alt="Preprocessed Image" width="300" height="auto">
 
 3. **Thresholding**  
@@ -52,7 +51,7 @@ The vision system processes the input image in several stages:
    <img src="https://github.com/user-attachments/assets/5b3c4cd6-be36-4d1d-a3ee-7369d3b62b95" alt="Threshold Mask" width="300" height="auto">
 
 4. **Morphological Operations**  
-   Dilation, erosion, and closing (MORPH_CLOSE) are applied to refine the mask and reduce noise.  
+   Dilation, erosion, and closing `MORPH_CLOSE` are applied to refine the mask and reduce noise.  
    <img src="https://github.com/user-attachments/assets/b21a067a-233d-4ae9-bbd7-1963be2e80d4" alt="Morphological Processing" width="300" height="auto">
 
 5. **Contour Detection & Polynomial Approximation**  
